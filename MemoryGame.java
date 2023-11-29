@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MemoryGame extends JFrame {
 
@@ -42,9 +43,10 @@ public class MemoryGame extends JFrame {
     private void buttonClicked(ActionEvent event){
         JButton button = (JButton)(event.getSource());
 
+        // get the index of the current button clicked
         int index = buttonList.indexOf(button);
+        // set the corresponding index from colorsList to be the index of button
         Color color = colorsList.get(index);
-        button.setText("" + index);
 
         // set background color of buttons to red
         button.setBackground(color);
@@ -63,6 +65,8 @@ public class MemoryGame extends JFrame {
         colorsList.add(Color.CYAN);
         colorsList.add(Color.PINK);
         colorsList.add(Color.PINK);
+
+        Collections.shuffle(colorsList);
     }
     }
 
