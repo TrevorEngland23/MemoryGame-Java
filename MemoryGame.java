@@ -10,6 +10,9 @@ public class MemoryGame extends JFrame {
     final int columns = 4;
     final int rows = 3;
     ArrayList<Color> colorsList = new ArrayList<Color>();
+
+    int match = 0;
+    JButton initialSelection;
     
 
     // ctor(s)
@@ -50,12 +53,45 @@ public class MemoryGame extends JFrame {
 
         // set background color of buttons to red
         button.setBackground(color);
+
+        if(initialSelection == null){
+            // this is the first button click
+            initialSelection = button;
+            button.setEnabled(false);
+        } else{
+
+        if(initialSelection.getBackground().equals(button.getBackground())){
+            // let user know of match
+            button.setEnabled(false);
+    
+        } else {
+            // reset the buttons
+
+            // let user know there wasn't a match
+            JOptionPane.showMessageDialog(this, "The colors don't match.");
+            button.setEnabled(true);
+            button.setBackground(null);
+            initialSelection.setEnabled(true);
+            initialSelection.setBackground(null);
+        }
+            initialSelection = null;
+        
+    }
+
+
     }
 
     private void initColorsList(){
-      
+
         // shuffle the buttons / colors
-     Collections.shuffle(colorsList, Color.RED, Color.RED, Color.BLUE, Color.BLUE, Color.ORANGE,Color.ORANGE, Color.MAGENTA, Color.MAGENTA, Color.CYAN, Color.CYAN, Color.PINK, Color.PINK);
+        Collections.addAll(colorsList, Color.RED, Color.RED, 
+                                       Color.BLUE, Color.BLUE, 
+                                       Color.ORANGE,Color.ORANGE, 
+                                       Color.MAGENTA, Color.MAGENTA, 
+                                       Color.CYAN, Color.CYAN, 
+                                       Color.PINK, Color.PINK);
+
+        Collections.shuffle(colorsList);
     }
     }
 
