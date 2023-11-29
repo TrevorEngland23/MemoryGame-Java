@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 public class MemoryGame extends JFrame {
@@ -19,10 +20,13 @@ public class MemoryGame extends JFrame {
 
         for(int i = 0; i < rows * columns; i++){
             JButton button = new JButton();
+            button.addActionListener(e -> buttonClicked(e)); // alternatively can use (this::buttonClicked)
             buttonList.add(button);
             add(button);
         }
 
+        // call the method initColorsList
+        initColorsList();   
         // grid layout
         setLayout(gridLayout);
         // set size of panel
@@ -34,6 +38,17 @@ public class MemoryGame extends JFrame {
         // program exits when user closes the application
         setDefaultCloseOperation(EXIT_ON_CLOSE); 
 }
+
+    private void buttonClicked(ActionEvent event){
+        JButton button = (JButton)(event.getSource());
+
+        int index = buttonList.indexOf(button);
+        Color color = colorsList.get(index);
+        button.setText("" + index);
+
+        // set background color of buttons to red
+        button.setBackground(color);
+    }
 
     private void initColorsList(){
         colorsList.add(Color.RED);
