@@ -7,6 +7,7 @@ public class MemoryGame extends JFrame {
     ArrayList<JButton> buttonList =  new ArrayList<JButton>(); // create an arraylist of buttons
     final int columns = 4;
     final int rows = 3;
+    ArrayList<Color> colorsList = new ArrayList<Color>();
     
 
     // ctor(s)
@@ -22,12 +23,32 @@ public class MemoryGame extends JFrame {
             add(button);
         }
 
+        // grid layout
         setLayout(gridLayout);
+        // set size of panel
         setSize(900,900);
+        // set location panel pops on screen
         setLocation(500,0);
+        // make it visible
         setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE); // program exits when user closes the application
+        // program exits when user closes the application
+        setDefaultCloseOperation(EXIT_ON_CLOSE); 
 }
+
+    private void initColorsList(){
+        colorsList.add(Color.RED);
+        colorsList.add(Color.RED);
+        colorsList.add(Color.BLUE);
+        colorsList.add(Color.BLUE);
+        colorsList.add(Color.ORANGE);
+        colorsList.add(Color.ORANGE);
+        colorsList.add(Color.MAGENTA);
+        colorsList.add(Color.MAGENTA);
+        colorsList.add(Color.CYAN);
+        colorsList.add(Color.CYAN);
+        colorsList.add(Color.PINK);
+        colorsList.add(Color.PINK);
+    }
     }
 
 
