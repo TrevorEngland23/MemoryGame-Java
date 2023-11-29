@@ -53,20 +53,9 @@ public class MemoryGame extends JFrame {
     }
 
     private void initColorsList(){
-        colorsList.add(Color.RED);
-        colorsList.add(Color.RED);
-        colorsList.add(Color.BLUE);
-        colorsList.add(Color.BLUE);
-        colorsList.add(Color.ORANGE);
-        colorsList.add(Color.ORANGE);
-        colorsList.add(Color.MAGENTA);
-        colorsList.add(Color.MAGENTA);
-        colorsList.add(Color.CYAN);
-        colorsList.add(Color.CYAN);
-        colorsList.add(Color.PINK);
-        colorsList.add(Color.PINK);
-
-        Collections.shuffle(colorsList);
+      
+        // shuffle the buttons / colors
+     Collections.shuffle(colorsList, Color.RED, Color.RED, Color.BLUE, Color.BLUE, Color.ORANGE,Color.ORANGE, Color.MAGENTA, Color.MAGENTA, Color.CYAN, Color.CYAN, Color.PINK, Color.PINK);
     }
     }
 
