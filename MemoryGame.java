@@ -1,98 +1,117 @@
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class MemoryGame extends JFrame {
-
-    ArrayList<JButton> buttonList =  new ArrayList<JButton>(); // create an arraylist of buttons
-    final int columns = 4;
-    final int rows = 3;
+    final int COLUMNS = 4;
+    final int ROWS = 3;
+    ArrayList<JButton> buttonList = new ArrayList<JButton>();
     ArrayList<Color> colorsList = new ArrayList<Color>();
 
     int match = 0;
     JButton initialSelection;
+    int score = 0;
+    JMenu menu;
     
-
-    // ctor(s)
     public MemoryGame() {
         super("Memory Game");
 
-        // make a grid layout
-        GridLayout gridLayout = new GridLayout(rows, columns); // rows, columns
+        GridLayout gridLayout = new GridLayout(ROWS, COLUMNS);
 
-        for(int i = 0; i < rows * columns; i++){
+        JMenuBar menuBar = new JMenuBar();
+        menu = new JMenu("Score: " + score);
+        JMenuItem jMenuItem = new JMenuItem("Restart Game");
+        jMenuItem.addActionListener(e -> RestartGame());
+        menu.add(jMenuItem);
+        menuBar.add(menu);
+        setJMenuBar(menuBar);
+        
+
+        for(int i = 0; i < ROWS* COLUMNS; i++ ){
             JButton button = new JButton();
-            button.addActionListener(e -> buttonClicked(e)); // alternatively can use (this::buttonClicked)
+            button.addActionListener(this::ButtonClicked);
             buttonList.add(button);
             add(button);
         }
-
-        // call the method initColorsList
-        initColorsList();   
-        // grid layout
+        InitColorsList();
         setLayout(gridLayout);
-        // set size of panel
-        setSize(900,900);
-        // set location panel pops on screen
-        setLocation(500,0);
-        // make it visible
+        setSize(900, 900);
+        setLocation(500, 0);
         setVisible(true);
-        // program exits when user closes the application
-        setDefaultCloseOperation(EXIT_ON_CLOSE); 
-}
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
 
-    private void buttonClicked(ActionEvent event){
-        JButton button = (JButton)(event.getSource());
+    private void RestartGame() {
+        for(int i = 0; i < buttonList.size(); i++ ){
+            JButton button = buttonList.get(i);
+            button.setBackground(null);
+            button.setEnabled(true);
+        }
 
-        // get the index of the current button clicked
+        score = 0;
+        menu.setText("Score: " + score);
+        match = 0;
+        Collections.shuffle(colorsList);
+    }
+
+    private void ButtonClicked(ActionEvent actionEvent){
+        JButton button = (JButton)actionEvent.getSource();
+
         int index = buttonList.indexOf(button);
-        // set the corresponding index from colorsList to be the index of button
         Color color = colorsList.get(index);
-
-        // set background color of buttons to red
         button.setBackground(color);
 
         if(initialSelection == null){
-            // this is the first button click
+            // then we know this is the first button click
             initialSelection = button;
             button.setEnabled(false);
-        } else{
-
-        if(initialSelection.getBackground().equals(button.getBackground())){
-            // let user know of match
-            button.setEnabled(false);
-    
         } else {
-            // reset the buttons
+            if(initialSelection.getBackground().equals(button.getBackground())){
+                // let user know of match
+                button.setEnabled(false);
+                ++match;
+                score += 10;
 
-            // let user know there wasn't a match
-            JOptionPane.showMessageDialog(this, "The colors don't match.");
-            button.setEnabled(true);
-            button.setBackground(null);
-            initialSelection.setEnabled(true);
-            initialSelection.setBackground(null);
-        }
+                if(match == 6){
+                    JOptionPane.showMessageDialog(this, "Winner winner!");
+                    RestartGame();
+                }
+            } else {
+                // let user know there wasnt a match
+                JOptionPane.showMessageDialog(this, "the colors dont match");
+
+                // reset the buttons
+                button.setEnabled(true);
+                button.setBackground(null);
+                initialSelection.setEnabled(true);
+                initialSelection.setBackground(null);
+
+                int newScore = score - 1;
+                score = newScore < 0 ? 0 : newScore;
+            }
+
+            menu.setText("Score: " + score);
+
+            // reset the first selection to null
             initialSelection = null;
+
+        }
         
+
+
+
     }
 
-
-    }
-
-    private void initColorsList(){
-
-        // shuffle the buttons / colors
-        Collections.addAll(colorsList, Color.RED, Color.RED, 
-                                       Color.BLUE, Color.BLUE, 
-                                       Color.ORANGE,Color.ORANGE, 
-                                       Color.MAGENTA, Color.MAGENTA, 
-                                       Color.CYAN, Color.CYAN, 
-                                       Color.PINK, Color.PINK);
-
+    private void InitColorsList() {
+        Collections.addAll(colorsList, Color.CYAN, Color.CYAN, Color.MAGENTA, Color.MAGENTA, Color.PINK, Color.PINK, Color.BLACK, Color.BLACK,Color.ORANGE, Color.ORANGE, Color.YELLOW, Color.YELLOW );
         Collections.shuffle(colorsList);
     }
-    }
-
-
+}
