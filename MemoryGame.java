@@ -30,7 +30,7 @@ public class MemoryGame extends JFrame {
         setJMenuBar(menuBar); // set the jmenu bar, referencing the menubar just created
         
 
-        for(int i = 0; i < ROWS* COLUMNS; i++ ){ // for every button in the grid layout, add an action listener to each button
+        for(int i = 0; i < rows* columns; i++ ){ // for every button in the grid layout, add an action listener to each button
             JButton button = new JButton(); // to do this, create button for each iteration
             button.addActionListener(this::ButtonClicked); // add the action listener to that button
             buttonList.add(button); // add that button to the arraylist of buttons 
